@@ -1,24 +1,67 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useState,useEffect} from 'react';
 import './App.css';
 
 function App() {
+  const [messages,setMessages]=useState([ ]);
+  const [newMessage,setNewMessage]=useState({id:"",text:"",from:""})
+  useEffect(()=>{
+    fetch(`https://cyf-minwwgo-chat-server.herokuapp.com/messages`)
+    .then(res=>res.json())
+    .then(data=> setMessages(data))
+
+  },[])
+  function handleNewMessage(e) {
+    
+    setNewMessage({ ...newMessage, [e.target.name]: e.target.value });
+  }
+  function handleSubmit(e){
+    e.preventDefault();
+    console.log(newMessage);
+    fetch(`https://minwwgo-chat-server.herokuapp.com/messages,{method:`POST`,body:formData}`);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      {messages.map((message) => (
+        <div>
+          {message.id} -{message.from} -{message.text}
+        </div>
+      ))}
+
+      <div>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          id:
+          <input
+            type="text"
+            name="id"
+            value={newMessage.id}
+            onChange={handleNewMessage}
+          />
+          <br />
+          Name:
+          <input
+            type="text"
+            name="from"
+            placeholder="Your Name"
+            value={newMessage.from}
+            onChange={handleNewMessage}
+          />
+          <br />
+          Message:
+          <input
+            type="text"
+            name="text"
+            placeholder="The message..."
+            value={newMessage.text}
+            onChange={handleNewMessage}
+          />
+          <br />
+          TimeSent:
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <button type="submit" onSubmit={handleSubmit}>
+          Send
+        </button>
+      </div>
     </div>
   );
 }
