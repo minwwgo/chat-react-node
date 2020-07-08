@@ -17,7 +17,7 @@ function App() {
   function handleSubmit(e){
     e.preventDefault();
     console.log(newMessage);
-    fetch(`https://minwwgo-chat-server.herokuapp.com/messages,{method:`POST`,body:formData}`);
+    
   }
 
   return (
