@@ -51,16 +51,15 @@ function App() {
   function handleSaveMessage(e) {
     e.preventDefault();
     console.log(newMessage);
-// /hello/${updatingMessageId}
+
     fetch(
-      `https://unwillingprobablecontrolpanel.minko1.repl.co/messages/`,
+      `https://unwillingprobablecontrolpanel.minko1.repl.co/messages/${updatingMessageId}`,
       {
         method: "PUT",
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "*",
-          // "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE"
+          
         },
         body: JSON.stringify(newMessage),
       }
